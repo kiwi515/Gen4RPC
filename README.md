@@ -10,26 +10,26 @@
 
 </br>
 
-## Features
-- Current Map Header
-- Game Name
-</br>
-
-## Games currently supported
-- Pokémon Diamond/Pearl
-- Pokémon Diamond/Pearl Demo Version
-- Pokémon Diamond/Pearl August '06 Debug Version
-</br>
-
-## Games planned to be supported in the future
-- [ ] Pokémon Platinum
-- [ ] Pokémon HeartGold/SoulSilver
-</br>
-
 ## How to use
 1. Run the Lua script `rpc.lua` in the [DeSmuMe](http://desmume.org/) version of your choice.
 2. Run the Python script `rpc.py`.
 3. Profit
+
+### Features
+- Current Map Header
+- Game Name
+
+### Games currently supported
+- [X] Pokémon Diamond/Pearl
+- [X] Pokémon Diamond/Pearl Demo Version
+- [X] Pokémon Diamond/Pearl August '06 Debug Version
+- [ ] Pokémon Platinum
+- [ ] Pokémon HeartGold/SoulSilver
+
+### To-do
+- [ ] Revise map headers for D/P
+- [ ] Support Platinum, combine Pt headers with D/P if possible
+- [ ] Support HG/SS, check if both games use the same map headers
 </br>
 
 ### NOTE: Keep all files inside the .zip in the same folder so the script will run properly.
