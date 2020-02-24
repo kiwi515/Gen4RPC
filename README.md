@@ -5,6 +5,8 @@ Discord Rich Presence (RPC) Integration for the Generation 4 Pokémon games, use
 
 - **If your rich presence is not updating properly, try restarting your Discord client (CTRL+R)**
 </br>
+[![pypresence](https://img.shields.io/badge/using-pypresence-00bb88.svg?style=for-the-badge&logo=discord&logoWidth=20)](https://github.com/qwertyquerty/pypresence)
+</br>
 
 ## Features
 - Current Map Header
