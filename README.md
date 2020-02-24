@@ -4,6 +4,7 @@ Discord Rich Presence (RPC) Integration for the Generation 4 Pokémon games, use
 - (Due to the Discord API's [rate limit on activty updates](https://discordapp.com/developers/docs/game-sdk/activities), this script updates every 5 seconds to be a little bit under the limit). 
 
 - **If your rich presence is not updating properly, try restarting your Discord client (CTRL+R)**
+</br>
 
 [![pypresence](https://img.shields.io/badge/using-pypresence-00bb88.svg?style=for-the-badge&logo=discord&logoWidth=20)](https://github.com/qwertyquerty/pypresence)
 
