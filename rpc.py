@@ -1,5 +1,12 @@
-from pypresence import Presence, Activity
+import os
+import sys
 import time
+
+try:
+    from pypresence import Presence, Activity
+except ModuleNotFoundError:
+    os.system('{} -m pip install -U '.format(sys.executable) + "pypresence -q")
+    import pypresence
 
 # out.dat constants (for readability)
 gameNameOffset = 0
@@ -21,22 +28,22 @@ pkm = Activity(RPC)
 pkm.start = int(time.time())
 
 # create list of regions
-GameRegion = open("Region", "r")
+GameRegion = open(os.path.join(sys.path[0], "Region"), "r")
 gameList = GameRegion.readlines()
 GameRegion.close()
 
 # create list of game names
-Name = open("GameName", "r")
+Name = open(os.path.join(sys.path[0],"GameName"), "r")
 nameList = Name.readlines()
 Name.close()
 
 # create list of game image names
-Image = open("GameImage", "r")
+Image = open(os.path.join(sys.path[0],"GameImage"), "r")
 imageList = Image.readlines()
 Image.close()
 
 # create list of D/P map headers
-DP = open("DPheaders", "r")
+DP = open(os.path.join(sys.path[0],"DPheaders"), "r")
 DPheaderList = DP.readlines()
 DP.close()
 
@@ -48,7 +55,7 @@ DP.close()
 #HGSSheaderList = HGSS.readlines()
 #HGSS.close()
 
-emuOutput = open("out.dat", "rb")
+emuOutput = open(os.path.join(sys.path[0],"out.dat"), "rb")
 
 while True:
     emuOutput.seek(0,0) # move to beginning of file
@@ -67,6 +74,7 @@ while True:
     gameImage = imageList[ luaStats[gameNameOffset] ] # get game image
     gameImage = gameImage.rstrip("\r\n") # removes escape character so image query works properly
     
+    print("\nUpdating RPC Activity:\nMap: " + mapHeader + "\nGame Ver: " + gameName + gameVer + '\n')
     RPC.update(state = mapHeader, details = gameName, large_image = gameImage, start = pkm.start)
     
     time.sleep(5) # Discord API limit
