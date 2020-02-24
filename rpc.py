@@ -68,9 +68,13 @@ while True:
     else:
         gameName = nameList[ luaStats[gameNameOffset] ]
     
+	# map nr validation check
+    if luaStats[mapOffset] > 557:
+		mapHeader = "Jubilife City (> 557)"
+	else:
+		mapHeader = DPheaderList[ luaStats[mapOffset] ] # get map header
+	
     gameVer = gameList[ luaStats[gameVerOffset] ] # get game region
-    mapHeader = DPheaderList[ luaStats[mapOffset] ] # get map header
-    
     gameImage = imageList[ luaStats[gameNameOffset] ] # get game image
     gameImage = gameImage.rstrip("\r\n") # removes escape character so image query works properly
     
