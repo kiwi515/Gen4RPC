@@ -1,5 +1,5 @@
 # gen4-RPC
-Discord Rich Presence (RPC) Integration for the Generation 4 Pokémon games, used in conjunction with the [DeSmuMe](http://desmume.org/) emulator.
+  Discord Rich Presence (RPC) Integration for the Generation 4 Pokémon games, used in conjunction with the [DeSmuMe](http://desmume.org/) emulator.
 
 - (Due to the Discord API's [rate limit on activty updates](https://discordapp.com/developers/docs/game-sdk/activities), this script updates every 5 seconds to be a little bit under the limit). 
 
