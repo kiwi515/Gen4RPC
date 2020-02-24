@@ -32,4 +32,4 @@
 3. Profit
 </br>
 
-### NOTE: KEEP THE LUA IN THE SAME FOLDER AS THE PYTHON SCRIPT!!
+### NOTE: Keep all files inside the .zip in the same folder so the script will run properly.
