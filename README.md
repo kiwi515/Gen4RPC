@@ -30,7 +30,8 @@
 - [ ] Revise map headers for D/P
 - [ ] Support Platinum, combine Pt headers with D/P if possible
 - [ ] Support HG/SS, check if both games use the same map headers
-- [ ] If possible, read from DeSmuMe RAM rather than relying on a lua to output information.
+- [ ] Differentiate between games, (Ex: Diamond OR Pearl, HeartGold OR SoulSilver)
+- [ ] If possible, read from DeSmuMe RAM rather than relying on a lua to output information
 </br>
 
 ### NOTE: Keep all files inside the .zip in the same folder so the script will run properly.
