@@ -2,6 +2,9 @@ import os
 import sys
 import time
 
+def chomp(string1): # removes \n from string
+    return string1.rstrip("\r\n")
+
 try:
     from pypresence import Presence, Activity
 except ModuleNotFoundError:
@@ -55,30 +58,30 @@ DP.close()
 #HGSSheaderList = HGSS.readlines()
 #HGSS.close()
 
-emuOutput = open(os.path.join(sys.path[0],"out.dat"), "rb")
+luaStats = open(os.path.join(sys.path[0],"out.dat"), "rb")
 
 while True:
-    emuOutput.seek(0,0) # move to beginning of file
-    luaStats = emuOutput.readlines() # read all lines from file into a list
-    luaStats = [int(i) for i in luaStats] # convert emulator output to integers
+    luaStats.seek(0,0) # move to beginning of file
+    luaStatsList = luaStats.readlines() # read all lines from file into a list
+    luaStatsList = [int(i) for i in luaStatsList] # convert emulator output to integers
     
     # get game name
-    if luaStats[gameNameOffset] != 4:
-        gameName = "Pokémon " + nameList[ luaStats[gameNameOffset] ]
+    if luaStatsList[gameNameOffset] != 4:
+        gameName = "Pokémon " + nameList[ luaStatsList[gameNameOffset] ]
     else:
-        gameName = nameList[ luaStats[gameNameOffset] ]
+        gameName = nameList[ luaStatsList[gameNameOffset] ]
     
 	# map nr validation check
-    if luaStats[mapOffset] > 557:
-		mapHeader = "Jubilife City (> 557)"
-	else:
-		mapHeader = DPheaderList[ luaStats[mapOffset] ] # get map header
+    if luaStatsList[mapOffset] > 557:
+	    mapHeader = "Jubilife City (> 557)"
+    else:
+	    mapHeader = DPheaderList[ luaStatsList[mapOffset] ] # get map header
 	
-    gameVer = gameList[ luaStats[gameVerOffset] ] # get game region
-    gameImage = imageList[ luaStats[gameNameOffset] ] # get game image
-    gameImage = gameImage.rstrip("\r\n") # removes escape character so image query works properly
+    gameVer = gameList[ luaStatsList[gameVerOffset] ] # get game region
+    gameImage = imageList[ luaStatsList[gameNameOffset] ] # get game image
+    #gameImage = gameImage.rstrip("\r\n") # removes escape character so image query works properly
     
     print("\nUpdating RPC Activity:\nMap: " + mapHeader + "\nGame Ver: " + gameName + gameVer + '\n')
-    RPC.update(state = mapHeader, details = gameName, large_image = gameImage, start = pkm.start)
+    RPC.update(state = chomp(mapHeader), details = chomp(gameName), large_image = chomp(gameImage), start = pkm.start)
     
     time.sleep(5) # Discord API limit
