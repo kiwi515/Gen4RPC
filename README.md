@@ -27,7 +27,7 @@
 - [ ] Pokémon HeartGold/SoulSilver
 
 ### To-do
-- [ ] Revise map headers for D/P
+- [X] Revise map headers for D/P (sort-of done)
 - [ ] Support Platinum, combine Pt headers with D/P if possible
 - [ ] Support HG/SS, check if both games use the same map headers
 - [ ] Differentiate between games, (Ex: Diamond OR Pearl, HeartGold OR SoulSilver)
