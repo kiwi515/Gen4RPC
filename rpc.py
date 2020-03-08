@@ -31,22 +31,22 @@ pkm = Activity(RPC)
 pkm.start = int(time.time())
 
 # create list of regions
-GameRegion = open(os.path.join(sys.path[0], "Region"), "r")
+GameRegion = open(os.path.join(sys.path[0], "Region"), "r", encoding = "ISO-8859-1")
 gameList = GameRegion.readlines()
 GameRegion.close()
 
 # create list of game names
-Name = open(os.path.join(sys.path[0],"GameName"), "r")
+Name = open(os.path.join(sys.path[0],"GameName"), "r", encoding = "ISO-8859-1")
 nameList = Name.readlines()
 Name.close()
 
 # create list of game image names
-Image = open(os.path.join(sys.path[0],"GameImage"), "r")
+Image = open(os.path.join(sys.path[0],"GameImage"), "r", encoding = "ISO-8859-1")
 imageList = Image.readlines()
 Image.close()
 
 # create list of D/P map headers
-DP = open(os.path.join(sys.path[0],"DPheaders"), "r")
+DP = open(os.path.join(sys.path[0],"DPheaders"), "r", encoding = "ISO-8859-1")
 DPheaderList = DP.readlines()
 DP.close()
 
@@ -67,16 +67,16 @@ while True:
     
     # get game name
     if luaStatsList[gameNameOffset] != 4:
-        gameName = "Pokémon " + nameList[ luaStatsList[gameNameOffset] ]
+        gameName = "Pokemon " + nameList[ luaStatsList[gameNameOffset] ]
     else:
         gameName = nameList[ luaStatsList[gameNameOffset] ]
     
-	# map nr validation check
+    # map nr validation check
     if luaStatsList[mapOffset] > 557:
-	    mapHeader = "Jubilife City (> 557)"
+        mapHeader = "Jubilife City (> 557)"
     else:
-	    mapHeader = DPheaderList[ luaStatsList[mapOffset] ] # get map header
-	
+        mapHeader = DPheaderList[ luaStatsList[mapOffset] ] # get map header
+    
     gameVer = gameList[ luaStatsList[gameVerOffset] ] # get game region
     gameImage = imageList[ luaStatsList[gameNameOffset] ] # get game image
     #gameImage = gameImage.rstrip("\r\n") # removes escape character so image query works properly
