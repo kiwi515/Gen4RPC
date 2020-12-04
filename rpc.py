@@ -6,7 +6,7 @@ def chomp(string1): # removes \n from string
     return string1.rstrip("\r\n")
 
 try:
-    from pypresence import Presence, Activity
+    from pypresence import Presence
 except ModuleNotFoundError:
     os.system('{} -m pip install -U '.format(sys.executable) + "pypresence -q")
     import pypresence
@@ -24,11 +24,7 @@ client_id = "510206500052926496"
 RPC = Presence(client_id)
 RPC.connect()
 
-# establish client activity
-pkm = Activity(RPC)
-
-# keeps track of time elapsed
-pkm.start = int(time.time())
+startTime = int(time.time())
 
 # create list of regions
 GameRegion = open(os.path.join(sys.path[0], "Region"), "r", encoding = "ISO-8859-1")
@@ -79,9 +75,8 @@ while True:
     
     gameVer = gameList[ luaStatsList[gameVerOffset] ] # get game region
     gameImage = imageList[ luaStatsList[gameNameOffset] ] # get game image
-    #gameImage = gameImage.rstrip("\r\n") # removes escape character so image query works properly
     
-    print("\nUpdating RPC Activity:\nMap: " + mapHeader + "\nGame Ver: " + gameName + gameVer + '\n')
-    RPC.update(state = chomp(mapHeader), details = chomp(gameName), large_image = chomp(gameImage), start = pkm.start)
+    print("Updating RPC Activity:\nMap: " + mapHeader + "Game Ver: " + gameName + gameVer)
+    RPC.update(state = chomp(mapHeader), details = chomp(gameName), large_image = chomp(gameImage), start = startTime)
     
     time.sleep(5) # Discord API limit
