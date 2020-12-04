@@ -8,9 +8,6 @@ GAME_VER = 1
 MAP = 2
 CLIENT_ID = "510206500052926496"
 
-def chomp(string1):
-    return string1.rstrip("\r\n")
-
 if __name__ == "__main__":
     try:
         from pypresence import Presence
