@@ -1,82 +1,59 @@
 import os
 import sys
 import time
+from Gen4.GameContext import GameContext
 
-def chomp(string1): # removes \n from string
+GAME_NAME = 0
+GAME_VER = 1 
+MAP = 2
+CLIENT_ID = "510206500052926496"
+
+def chomp(string1):
     return string1.rstrip("\r\n")
 
-try:
-    from pypresence import Presence
-except ModuleNotFoundError:
-    os.system('{} -m pip install -U '.format(sys.executable) + "pypresence -q")
-    import pypresence
+if __name__ == "__main__":
+    try:
+        from pypresence import Presence
+    except ModuleNotFoundError:
+        os.system('{} -m pip install -U '.format(sys.executable) + "pypresence -q")
+        import pypresence
 
-# out.dat constants (for readability)
-gameNameOffset = 0
-gameVerOffset = 1 
-mapOffset = 2
-#
+    RPC = Presence(CLIENT_ID)
+    RPC.connect()
 
-# app client id
-client_id = "510206500052926496"
+    # Start epoch time
+    startTime = int(time.time())
 
-# establish RPC
-RPC = Presence(client_id)
-RPC.connect()
+    # Open out.dat. If the file does not exist, create it and then open it.
+    try:
+        f = open(os.path.join(sys.path[0],"out.dat"), "rb")
+    except FileNotFoundError:
+        print("It seems out.dat does not exist. Creating new file...")
+        open("out.dat", "w+").close()
+        print("out.dat created. Attempting to open...")
+        f = open(os.path.join(sys.path[0],"out.dat"), "rb")
+        print("File opened successfully!\n")
 
-startTime = int(time.time())
+    # Init game context
+    gc = GameContext(0, 0, 0)
 
-# create list of regions
-GameRegion = open(os.path.join(sys.path[0], "Region"), "r", encoding = "ISO-8859-1")
-gameList = GameRegion.readlines()
-GameRegion.close()
+    while True:
+        # Parse out.dat's contents into a list
+        f.seek(0,0)
+        out = f.readlines()
+        out = [int(i) for i in out]
 
-# create list of game names
-Name = open(os.path.join(sys.path[0],"GameName"), "r", encoding = "ISO-8859-1")
-nameList = Name.readlines()
-Name.close()
-
-# create list of game image names
-Image = open(os.path.join(sys.path[0],"GameImage"), "r", encoding = "ISO-8859-1")
-imageList = Image.readlines()
-Image.close()
-
-# create list of D/P map headers
-DP = open(os.path.join(sys.path[0],"DPheaders"), "r", encoding = "ISO-8859-1")
-DPheaderList = DP.readlines()
-DP.close()
-
-#PT = open("PTheaders", "r")
-#PTheaderList = PT.readlines()
-#PT.close()
-
-#HGSS = open("HGSSheaders", "r")
-#HGSSheaderList = HGSS.readlines()
-#HGSS.close()
-
-luaStats = open(os.path.join(sys.path[0],"out.dat"), "rb")
-
-while True:
-    luaStats.seek(0,0) # move to beginning of file
-    luaStatsList = luaStats.readlines() # read all lines from file into a list
-    luaStatsList = [int(i) for i in luaStatsList] # convert emulator output to integers
-    
-    # get game name
-    if luaStatsList[gameNameOffset] != 4:
-        gameName = "Pokemon " + nameList[ luaStatsList[gameNameOffset] ]
-    else:
-        gameName = nameList[ luaStatsList[gameNameOffset] ]
-    
-    # map nr validation check
-    if luaStatsList[mapOffset] > 557:
-        mapHeader = "Jubilife City (> 557)"
-    else:
-        mapHeader = DPheaderList[ luaStatsList[mapOffset] ] # get map header
-    
-    gameVer = gameList[ luaStatsList[gameVerOffset] ] # get game region
-    gameImage = imageList[ luaStatsList[gameNameOffset] ] # get game image
-    
-    print("Updating RPC Activity:\nMap: " + mapHeader + "Game Ver: " + gameName + gameVer)
-    RPC.update(state = chomp(mapHeader), details = chomp(gameName), large_image = chomp(gameImage), start = startTime)
-    
-    time.sleep(5) # Discord API limit
+        # Update the game context if out.dat is not empty
+        try:
+            gc.update(out[GAME_NAME], out[GAME_VER], out[MAP])
+        except IndexError:
+            print("It seems out.dat is empty. Retrying in 1 second...")
+            time.sleep(1)
+            continue
+        
+        # Update RPC
+        print("\nUpdating RPC Activity:\nMap: " + gc.header() + " " + "Game Ver: " + gc.title() + " (" + gc.region() + ")")
+        RPC.update(state = gc.header(), details = gc.title(), large_image = gc.img(), start = startTime)
+        
+        # Discord API limit
+        time.sleep(5)
