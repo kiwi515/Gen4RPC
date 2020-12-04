@@ -11,7 +11,7 @@
 </br>
 
 ## How to use
-1. Run the Lua script `rpc.lua` in the [DeSmuMe](http://desmume.org/) version of your choice.
+1. Run the Lua script `export.lua` in the [DeSmuMe](http://desmume.org/) version of your choice.
 2. Run the Python script `rpc.py`.
 
 ### Features
