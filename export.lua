@@ -4,6 +4,8 @@ Pokemon Gen 4 RPC Lua Companion
 Credit to Ganix for making VET's automatic game detection script.
 ]]
 
+print("Gen 4 RPC Lua script (export.py)")
+
 -- Globals
 G_CURRENT_MAP = 0
 G_LAST_MAP = 0
@@ -37,6 +39,7 @@ function outputLog()
 end
 
 -- Determine game version, then language/locale
+print("Setting up game variables")
 ver = memory.readdword(0x023FFE0C)
 if ver == 0 then ver = memory.readdword(0x027FFE0C) end
 id = bit.band(ver, 0xFF)
@@ -101,12 +104,13 @@ G_CURRENT_MAP = memory.readword(map_ptr)
 -- Initial output
 outputLog()
 
+print("Setup complete!")
 while true do
 	-- Compare if the map ID has changed since last frame.
 	-- Note that these values are for comparison only.
 	-- For an accurate reading, we just read from the map pointer once we know the map has changed.
 	if G_LAST_MAP ~= G_CURRENT_MAP then
-		print("NEW MAP", memory.readword(map_ptr))
+		print("Map change detected: ->", memory.readword(map_ptr))
 		outputLog() 
 	end
 
