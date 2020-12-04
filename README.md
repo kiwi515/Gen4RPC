@@ -13,16 +13,15 @@
 ## How to use
 1. Run the Lua script `rpc.lua` in the [DeSmuMe](http://desmume.org/) version of your choice.
 2. Run the Python script `rpc.py`.
-3. Profit
 
 ### Features
 - Current Map Header
 - Game Name
+- Time Played
 
 ### Games currently supported
 - [X] Pokémon Diamond/Pearl
 - [X] Pokémon Diamond/Pearl Demo Version
-- [X] Pokémon Diamond/Pearl August '06 Debug Version
 - [ ] Pokémon Platinum
 - [ ] Pokémon HeartGold/SoulSilver
 
